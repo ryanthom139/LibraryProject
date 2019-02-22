@@ -1,0 +1,2 @@
+void destroyTree();
+void growTree();
