@@ -31,9 +31,22 @@ int main( int argc, char **argv ) {
 
   }
   
+  #include "destroyTree.h"
+  #include "growTree.h"
   
+  void destroyTree();
   // print the tree for Gnuplot
 	writeTree( head );
-
+  #include "destroyTree.h"
+  #include "growTree.h"
+  
+  void destroyTree();
+  destroyTree();
   return 0;
-}
+}#include "destroyTree.h"
+#include "growTree.h"
+
+void destroyTree();#include "destroyTree.h"
+#include "growTree.h"
+
+void destroyTree();
