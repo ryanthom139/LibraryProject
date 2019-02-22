@@ -1,8 +1,11 @@
-project(quadtree_start)
+project(quadTree)
 set( CMAKE_BUILD_TYPE Debug)
+set(CMAKE_C_FLAGS "-std=c99")
 
 cmake_minimum_required(VERSION 2.6)
 
-add_executable(quadtree_start main.c buildTree.c writeTree.c destroyTree.c growTree.c)
+add_executable(quadTree main.c buildTree.c writeTree.c destroyTree.c growTree.c)
 
-target_link_libraries(quadtree_start m)
+target_link_libraries(quadTree m)
+
+
