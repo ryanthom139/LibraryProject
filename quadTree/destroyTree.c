@@ -1,7 +1,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "treeStructure.h"
-#include "treeChanges.h"
+#include "destroyTree.h"
 #include "buildTree.h"
 #include "writeTree.h"
 
