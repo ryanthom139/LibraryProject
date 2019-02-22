@@ -9,44 +9,20 @@ int main( int argc, char **argv ) {
 
   Node *head;
 
-  // make the head node
+  // make the head nodemakeChildren
   head = makeNode( 0.0,0.0, 0 );
 
   // make a tree
   makeChildren( head );
 
+  growTree(head);
 
-  for (int i = 0; i < 4; i++){
-    
-    makeChildren( head -> child[i] );
-  }
-
-  for (int i = 0; i < 4; i++){
-
-    for (int j = 0; j < 4; j++){
-    
-    makeChildren( head -> child[i] -> child[j] );
-    
-    }
-
-  }
+  writeTree(head);
   
-  #include "destroyTree.h"
-  #include "growTree.h"
-  
-  void destroyTree();
-  // print the tree for Gnuplot
-	writeTree( head );
-  #include "destroyTree.h"
-  #include "growTree.h"
-  
-  void destroyTree();
-  destroyTree();
+ 
+
+
+
   return 0;
-}#include "destroyTree.h"
-#include "growTree.h"
 
-void destroyTree();#include "destroyTree.h"
-#include "growTree.h"
-
-void destroyTree();
+}
