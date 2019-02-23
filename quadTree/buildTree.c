@@ -26,6 +26,7 @@ void makeChildren( Node *parent ) {
   double x = parent->xy[0];  
   double y = parent->xy[1];
 
+  
   int level = parent->level;
 
   double hChild = pow(2.0,-(level+1));
@@ -38,17 +39,18 @@ void makeChildren( Node *parent ) {
   return;
 }
 
- void growTree(Node *head){
+ void growTree(Node *head, int max_level){
 
-    if( head->child[0] == NULL ){ 
+    if( head->child[0] == NULL && head->level < max_level){ 
             makeChildren(head);
+            
         }
-    else {
+    else if(head->level < max_level) {
         for (int i=0; i<4; i++ ) {   
-            growTree(head->child[i]);
+            growTree(head->child[i], max_level);
             }
         }
-        
+     
     }
 
 void destroyTree(Node *head){
