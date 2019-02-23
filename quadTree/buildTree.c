@@ -15,15 +15,15 @@ Node *makeNode( double x, double y, int level ) {
   node->xy[0] = x;
   node->xy[1] = y;
 
-  for( i=0;i<4;++i )
+  for( i=0;i<4;++i ){
     node->child[i] = NULL;  // Setting all child pointers to NULL
-
+  }
   return node;
 }
 
 void makeChildren( Node *parent ) {
 
-  double x = parent->xy[0];
+  double x = parent->xy[0];  
   double y = parent->xy[1];
 
   int level = parent->level;
@@ -38,9 +38,21 @@ void makeChildren( Node *parent ) {
   return;
 }
 
+ void growTree(Node *head){
+
+    if( head->child[0] == NULL ){ 
+            makeChildren(head);
+        }
+    else {
+        for (int i=0; i<4; i++ ) {   
+            growTree(head->child[i]);
+            }
+        }
+        
+    }
+
 void destroyTree(Node *head){
-  
-  
+
       if( head->child[0] == NULL ){
           free(head);
       }
@@ -55,19 +67,6 @@ void destroyTree(Node *head){
       
   }
 
-  void growTree(Node *head){
-    
-        
-            if( head->child[0] == NULL ){
-                for (int i=0; i<4; i++ ) {   
-                    makeChildren(head->child[i]);
-                }
-            }
-            else {
-                for (int i=0; i<4; i++ ) {   
-                    growTree(head->child[i]);
-                }
-            }
-    }
+
 
     

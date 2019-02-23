@@ -9,17 +9,14 @@ int main( int argc, char **argv ) {
 
   Node *head;
 
-  // make the head nodemakeChildren
+  // make the head node
   head = makeNode( 0.0,0.0, 0 );
 
   // make a tree
-  makeChildren( head );
-
-  growTree(head);
-
-  writeTree(head);
-  
  
+  growTree( head );
+  growTree( head );
+  writeTree( head );
 
 
 
