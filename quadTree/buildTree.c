@@ -43,7 +43,6 @@ void makeChildren( Node *parent ) {
 
     if( head->child[0] == NULL && head->level < max_level){ 
             makeChildren(head);
-            
         }
     else if(head->level < max_level) {
         for (int i=0; i<4; i++ ) {   
@@ -62,7 +61,6 @@ void destroyTree(Node *head){
       {
           for ( int i=0; i<4; i++ ) {
               destroyTree(head->child[i]);
-              
               }
               free(head);
       }
