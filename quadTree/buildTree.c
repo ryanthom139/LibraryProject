@@ -21,12 +21,11 @@ Node *makeNode( double x, double y, int level ) {
   return node;
 }
 
-void makeChildren( Node *parent ) {
-
+// Creates children on the node and gives them the necessary values in the children nodes
+void makeChildren( Node *parent ) {    
   double x = parent->xy[0];  
   double y = parent->xy[1];
 
-  
   int level = parent->level;
 
   double hChild = pow(2.0,-(level+1));
@@ -39,7 +38,8 @@ void makeChildren( Node *parent ) {
   return;
 }
 
- void growTree(Node *head, int max_level){
+// Grows the tree by a full level once every call
+ void growTree(Node *head, int max_level){  
 
     if( head->child[0] == NULL && head->level < max_level){ 
             makeChildren(head);
@@ -51,6 +51,7 @@ void makeChildren( Node *parent ) {
         }
     }
 
+// Destroys the tree by freeing all memory locations that were allocated to it
 void destroyTree(Node *head){
 
       if( head->child[0] == NULL ){
