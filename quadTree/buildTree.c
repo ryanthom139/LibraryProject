@@ -12,7 +12,6 @@ Node *makeNode( double x, double y, int level ) {
   Node *node = (Node *)malloc(sizeof(Node));  // Allocate special space for the node
 
   node->level = level;  // Accessing the level member of the node structure
-
   node->xy[0] = x;
   node->xy[1] = y;
 
