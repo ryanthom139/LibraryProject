@@ -64,6 +64,8 @@ bool indicator( Node *node, double tolerance, int choice ) {
     return false;
 }
 
+// Visits every leaf node and calls the indicator function
+// Also adds children when needed
 int addChildren(Node *node, int choice, double tolerance)
 {
   int count = 0;
@@ -81,6 +83,8 @@ int addChildren(Node *node, int choice, double tolerance)
    return count;
 }
 
+// Monitors how many children are added once we visit every leaf node
+// Repeats add children function if required
 void monitorChild (Node *node, int choice, double tolerance){
 
  while(addChildren(node, choice, tolerance) != 0){
