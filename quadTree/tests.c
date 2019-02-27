@@ -5,8 +5,8 @@
 #include "writeTree.h"
 #include "valueTree.h"
 
-
-void Task1(){
+// Destroy tree test for lab demostration
+void Task1(){     
   Node *head;
   head = makeNode( 0.0,0.0, 0 );
   int max_level = 10;
@@ -20,6 +20,7 @@ void Task1(){
 
 }
 
+// Growing tree test for lab demonstration
 void Task2(){
   Node *head;
   head = makeNode( 0.0,0.0, 0 );
@@ -35,6 +36,7 @@ void Task2(){
 
 }
 
+// Max Level parameter test for lab demonstration
 void Task3(){
 Node *head;
 head = makeNode( 0.0,0.0, 0 );
@@ -49,6 +51,7 @@ writeTree(head);
 destroyTree(head);
 }
 
+// Growing tree with indicator test for lab demonstration
 void Task4(){
 Node *head;
 head = makeNode( 0.0,0.0, 0 );
@@ -66,6 +69,7 @@ destroyTree(head);
 
 int main( int argc, char **argv ) {
   
+  // Calling all the test funtions
     Task1();
     Task2();
     Task3();
