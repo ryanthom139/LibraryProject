@@ -1,8 +1,9 @@
 #include "stdio.h"
+#include "stdlib.h"
 #include "math.h"
 #include "treeStructure.h"
 #include "buildTree.h"
-#include "stdlib.h"
+
 
 Node *makeNode( double x, double y, int level ) {
 
@@ -49,7 +50,6 @@ void makeChildren( Node *parent ) {
             growTree(head->child[i], max_level);
             }
         }
-     
     }
 
 void destroyTree(Node *head){
