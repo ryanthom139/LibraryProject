@@ -1,14 +1,16 @@
-
+#include "stdio.h"
 #include "math.h"
 #include "stdbool.h"
-
-#include  "quadtree.h"
+#include "treeStructure.h"
+#include  "buildTree.h"
 #include  "valueTree.h"
-#include "buildTree.h"
+
 
 #define MAX(a,b) ( ((a)>(b)) ? (a):(b) )
 #define MIN(a,b) ( ((a)<(b)) ? (a):(b) )
-int count = 0;
+
+
+
 // Define a function that is computed
 // on the quadtree grid
 //
@@ -19,7 +21,7 @@ int count = 0;
 
 double dataFunction( double x, double y, int choice ){
   double value;
-
+ 
   if( choice == 0 )
     value = exp(-(y-x)*(y-x)/0.01) + exp(-(x-y)*(x-y)/0.01);
 
@@ -44,6 +46,7 @@ double dataFunction( double x, double y, int choice ){
 
 bool indicator( Node *node, double tolerance, int choice ) {
 
+  
   double v[4],vmin,vmax;
   double h = pow(2,-node->level);
 
@@ -61,19 +64,27 @@ bool indicator( Node *node, double tolerance, int choice ) {
     return false;
 }
 
-void addChildren(Node *node, int choice, int tolerance)
+int addChildren(Node *node, int choice, double tolerance)
 {
+  int count = 0;
   for (int i = 0; i < 4; i++){
-    if(indicator(node->child[i], tolerance, choice) == false){
-      makeChildren(node);
-      count++;
+    if(node->child[i]->child[0] == NULL){
+      if (indicator(node->child[i], tolerance, choice) == false){
+        makeChildren(node->child[i]);
+        count++;
+      }  
+    }
+    else{
+        count = count + addChildren(node->child[i], choice, tolerance);
+        }    
   }
-}
+   return count;
 }
 
-void monitorChild (){
-  if( count > 0){
+void monitorChild (Node *node, int choice, double tolerance){
+
+ while(addChildren(node, choice, tolerance) != 0){
     addChildren(node, choice, tolerance);
-
   }
 }
+ 
