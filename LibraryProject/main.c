@@ -3,36 +3,46 @@
 #include "string.h"
 #include "dataStructures.h"
 #include "bookReg.h"
-
+#include "studentReg.h"
+#include "listFunc.h"
+#include "borrowFunc.h"
 
 
 int main(){
     
     int count = 0;    
-    char* bookName; 
-    bookNode* head = createBook("");
-
-    int option;
-    scanf("%i", &option);
-    printf("%i", option);
-    if (option == 0){
     
+    //char* studentName;
+    //studentNode* head = createStudent("");
+    char* bookName; 
+    bookNode* head;
     bookName = "one123";
-    makeBook(head, bookName);
+    head = createBook(bookName);
     bookName = "two";
     makeBook(head, bookName);
     bookName = "three";
     makeBook(head, bookName);
     bookName = "four";
     makeBook(head, bookName);
-    saveData(head);
+    //head = borrowBook(head, 2);
+    //head = borrowBook(head, 3);
+    //head = returnBook(head, 3);
+    //head = returnBook(head, 3);
+    char* nameOfBook;
+    nameOfBook = "one";
     
-    destroyTree(head);}
+    saveDataBooks(head);
+    searchBook(head, nameOfBook);
+    //listBooks(head);
+    destroyTreeBooks(head);
 
-    else if (option == 1){
-        loadData(head);
-        printf("%s", head->next->bookInfo);
-    }
+    /*
+    studentName = "ryan thompson";
+    makeStudent(head, studentName);
+    saveDataStudents(head);
+    listStudents(head);
+    destroyTreeStudents(head);
+*/
 
     return 0;
 }

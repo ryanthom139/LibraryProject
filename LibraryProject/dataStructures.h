@@ -1,9 +1,10 @@
-/*struct student {
-    char *studentName;
-    char *borrowed;
+typedef struct studentNode {
+    
+    char *studentInfo;
     int studentId;
-};
-*/
+    struct studentNode* next;
+}studentNode;
+
 
 typedef struct bookNode{
 
@@ -11,6 +12,4 @@ typedef struct bookNode{
     int bookId;
     char *bookInfo;
     struct bookNode* next;
-    
-    
 }bookNode;
