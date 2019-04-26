@@ -23,10 +23,12 @@ void listBooks(bookNode* head){
 void listStudents(studentNode* head){
     
         if(head->next == NULL){
-            printf("Student Name: %s\n", head->studentInfo);
+            printf("Student username: %s\n", head->studentUsern);
             printf("Student ID: %i\n\n", head->studentId);
         }
         else{
+            printf("Student username: %s\n", head->studentUsern);
+            printf("Student ID: %i\n\n", head->studentId);
             listStudents(head->next);
         }
     }

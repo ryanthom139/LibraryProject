@@ -10,25 +10,26 @@ int currLine = 0;
 int saveDataCount = 0;
 int *triggersArr = NULL;
 
-bookNode* createBook(char *bookName){
+bookNode* createBook(char bookName[100]){
 
     bookNode* newBook = (bookNode*)malloc(sizeof(bookNode) +  sizeof(bookName));
 
-    newBook->bookInfo = strdup(bookName);
+    strcpy(newBook->bookInfo, bookName);
     newBook->isBorrowed = 0;
     newBook-> bookId = bookCount + 1;
     newBook->next = NULL;
+    newBook->borrowedBy = 0;
     
     return newBook;
 }
 
-void makeBookTmp(bookNode* parent, char* bookName)
+void makeBookTmp(bookNode* parent, char bookName[100])
 {
     parent->next = createBook(bookName);
     return;
 }
 
-void makeBook(bookNode* head, char* bookName)
+void makeBook(bookNode* head, char bookName[100])
 {
     if(head->next == NULL){
         bookCount++;
@@ -102,8 +103,8 @@ void saveOtherDataBooks(){
     fclose(fileNum);
 }
 
-void searchBook(bookNode* head, char* nameOfBook){
-    char strTmp[strlen(nameOfBook)+1];
+void searchBook(bookNode* head, char nameOfBook[100]){
+    char strTmp[strlen(nameOfBook)+50];
     char bookRead[256];
 
     FILE *file = fopen("books.csv", "r+");
