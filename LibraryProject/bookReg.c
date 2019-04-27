@@ -10,11 +10,13 @@ int currLine = 0;
 int saveDataCount = 0;
 int *triggersArr = NULL;
 
+// Creates a book returns it as a node to the linked that contains the books
 bookNode* createBook(char bookName[100]){
 
-    bookNode* newBook = (bookNode*)malloc(sizeof(bookNode) +  sizeof(bookName));
+    bookNode* newBook = (bookNode*)malloc(sizeof(bookNode) +  sizeof(bookName)); // Allocates memory space for the node
 
-    strcpy(newBook->bookInfo, bookName);
+    //Gives the variables in the node the correct value
+    strcpy(newBook->bookInfo, bookName); 
     newBook->isBorrowed = 0;
     newBook-> bookId = bookCount + 1;
     newBook->next = NULL;
@@ -23,12 +25,14 @@ bookNode* createBook(char bookName[100]){
     return newBook;
 }
 
+// Used by makeBook to give nodes next value the correct value
 void makeBookTmp(bookNode* parent, char bookName[100])
 {
     parent->next = createBook(bookName);
     return;
 }
 
+// Adds a book node to the end of the linked list
 void makeBook(bookNode* head, char bookName[100])
 {
     if(head->next == NULL){
@@ -40,6 +44,8 @@ void makeBook(bookNode* head, char bookName[100])
         makeBook(head->next, bookName);
     }
 }
+
+// Frees all the memory from the book linked list
 void destroyTreeBooks(bookNode *head){
     
           if( head->next == NULL ){
@@ -52,26 +58,25 @@ void destroyTreeBooks(bookNode *head){
           }
       }
 
+// Removes a node from the linked list depending on the book ID added
 bookNode* removeBook(bookNode* currPtr, int bookIdValue){
 
     if (currPtr == NULL){
         return NULL;
     }
-
     if(currPtr -> bookId == bookIdValue){
 
         bookNode* ptrNextTmp;
         ptrNextTmp = currPtr->next;
         free(currPtr);
-        bookCount--;
-
         return ptrNextTmp;
     }
-    currPtr->next = removeBook(currPtr->next, bookIdValue);
 
+    currPtr->next = removeBook(currPtr->next, bookIdValue);
     return currPtr;
 }
 
+// Saves the book data to a csv file so i can use my search function
 void saveDataBooks(bookNode* head){
     if (saveDataCount == 0 && head != NULL){
         FILE *file = fopen("books.csv", "w");
@@ -103,13 +108,14 @@ void saveOtherDataBooks(){
     fclose(fileNum);
 }
 
+// A function that searches for a book from the csv file
 void searchBook(bookNode* head, char nameOfBook[100]){
-    char strTmp[strlen(nameOfBook)+50];
-    char bookRead[256];
+    char strTmp[100];
+    char bookRead[100];
 
     FILE *file = fopen("books.csv", "r+");
     
-    while((fgets(strTmp, 256, file)) != NULL){
+    while((fgets(strTmp, 100, file)) != NULL){
 
         sscanf(strTmp, "%s", &bookRead);
         if(strstr(bookRead, nameOfBook) != NULL){
@@ -120,8 +126,8 @@ void searchBook(bookNode* head, char nameOfBook[100]){
 
 }
 
-
-bookNode* getBook(bookNode* currPtr, char bookPar[256]){
+// Checks each book to see if it is in the csv file whilst comparing it to the word searched
+bookNode* getBook(bookNode* currPtr, char bookPar[100]){
     
         if (currPtr == NULL){
             return NULL;
@@ -130,14 +136,49 @@ bookNode* getBook(bookNode* currPtr, char bookPar[256]){
         if(strstr(currPtr -> bookInfo, bookPar) != NULL){
             printf("Book Name: %s\n", currPtr->bookInfo);
             printf("Book ID: %i\n", currPtr->bookId);
-            printf("Borrowed: %i\n\n", currPtr->isBorrowed);
+            if(currPtr->isBorrowed == 0){
+                printf("Borrowed: No\n\n", currPtr->isBorrowed);
+            }
+            else{printf("Borrowed: Yes\n\n", currPtr->isBorrowed);}
         }
         currPtr->next = getBook(currPtr->next, bookPar);
     
         return currPtr;
     }
 
+// Checks if there is a duplicate book and returns 1 or 0 depending on the result
+int checkBookDup(bookNode* currPtr, char bookPar[100]){
 
+        if(currPtr == NULL){
+            return 0;
+        }
+        if(currPtr -> bookInfo == bookPar){
+            return 1;
+        }
+        if (currPtr->next == NULL){
+            return 0;
+        }
+        
+        checkBookDup(currPtr->next, bookPar);    
+    }
+
+
+
+/*
+bookNode* loadData(){
+    FILE *file = fopen("books.csv", "r");
+    char nameBookTmp[100];
+    while(fscanf(file,"%s", nameBookTmp)!=EOF){
+        bookNode* head = (bookNode*)malloc(sizeof(bookNode) +  sizeof(bookNameTmp));
+        
+        strcpy(head->bookInfo, bookNameTmp);
+        head->isBorrowed = 0;
+        head-> bookId = bookCount + 1;
+        head->next = NULL;
+        head->borrowedBy = 0;
+    }
+
+}*/
 /*
 void loadData(bookNode* head){
     

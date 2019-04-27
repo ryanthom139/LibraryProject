@@ -7,23 +7,27 @@
 int studCount = 0;
 int nodeStudCount = 0;
 
+// Creates a student returns it as a node to the linked that contains the students
 studentNode* createStudent(char studentUser[50], char studentPassw[50]){
     
-        studentNode* newStudent = (studentNode*)malloc(sizeof(studentNode) + sizeof(studentUser) + sizeof(studentPassw));
-        newStudent-> studentId = studCount;
-        strcpy(newStudent->studentUsern, studentUser);
-        strcpy(newStudent->studentPass, studentPassw);
-        newStudent->next = NULL;
+    //Gives the variables in the node the correct value
+    studentNode* newStudent = (studentNode*)malloc(sizeof(studentNode) + sizeof(studentUser) + sizeof(studentPassw));
+    newStudent-> studentId = studCount + 1;
+    strcpy(newStudent->studentUsern, studentUser);
+    strcpy(newStudent->studentPass, studentPassw);
+    newStudent->next = NULL;
         
-        return newStudent;
-    }
+    return newStudent;
+}
 
+// Used by makeBook to give nodes next value the correct value
 void makeStudentTmp(studentNode* parent, char studentUser[50], char studentPassw[50])
 {
     parent->next = createStudent(studentUser, studentPassw);
     return;
 }
 
+// Adds a student node to the end of the linked list
 void makeStudent(studentNode* head, char studentUser[50], char studentPassw[50])
 {
     if(head->next == NULL){
@@ -35,6 +39,7 @@ void makeStudent(studentNode* head, char studentUser[50], char studentPassw[50])
     }
 }
 
+// Frees all the memory from the student linked list
 void destroyTreeStudents(studentNode *head){
     
           if( head->next == NULL ){
@@ -48,6 +53,9 @@ void destroyTreeStudents(studentNode *head){
           
       }
 
+      
+      
+// A function that searches for a book from the csv file      
 void saveDataStudents(studentNode* head){
     if(head == NULL){
         saveOtherDataStudents();
@@ -62,7 +70,8 @@ void saveDataStudents(studentNode* head){
     }
 }
 
-int logInStudent(studentNode *head, char studentUser[50], char studentPassw[50], int nodeStudCount){
+// Returns the correct pointer to the student currently logged in
+int logInStudent(studentNode *head, char studentUser[50], char studentPassw[50], int *val){
     if(head == NULL)
     { 
         return 0;
@@ -71,9 +80,9 @@ int logInStudent(studentNode *head, char studentUser[50], char studentPassw[50],
     {
         return 1;
     }
-    logInStudent(head->next, studentUser, studentPassw, nodeStudCount);
-    nodeStudCount++;
-    printf("%i", nodeStudCount);
+    (*val)++;
+    logInStudent(head->next, studentUser, studentPassw, val);
+    
 }
 
 void saveOtherDataStudents(){

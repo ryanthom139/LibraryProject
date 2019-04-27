@@ -8,11 +8,15 @@
 #include "listFunc.h"
 
 int main(){
+
+    // Declarations of counters and triggers needed throughout the program
     int inputL1 = 0;
     int inputL2 = 0;
     int count = 0;
+    int i = 0;
     int librarianExists = 0;
     int nodeStudCount = 0;
+    int getNodeCount = 0;
     int studRegCount = 0;
     int bookAddCount = 0;
     char nameOfBook[100];
@@ -23,86 +27,109 @@ int main(){
     char LibPassTest[50];
     char LibUserTest[50];
     char bookName[100];
+    int bugStop = 0;
+
+    // Declarations of both the linked lists
     studentNode* studentHead;
     bookNode* bookHead;
-    int i = 0;
+    
     int trig;
     int bookID;
     while(i == 0){
 
-    printf("Register as a student : 0\n");
-    printf("Log in as a student : 1\n");
-    printf("Register / log in as the librarian : 2\n");
-    printf("Quit (warning all data will be lost) : 3\n\n");
+    // Prints out the main manu
+    printf("Register as a student : 1\n");
+    printf("Log in as a student : 2\n");
+    printf("Register / log in as the librarian : 3\n");
+    printf("Quit (warning all data will be lost) : 4\n\n");
    
     printf("What would you like to do?\n");
     scanf("%d", &inputL1);
-
-    if (inputL1 == 0){
+    
+    // If statement contains code for registering a student
+    if (inputL1 == 1){
         
         printf("Please enter a username: ");
         scanf("%s", studUser);
         printf("Please enter a password: ");
         scanf("%s", studPass);
-        if(studRegCount == 0){
+        if(studRegCount == 0){ // Need to give head node a value first
             studentHead = createStudent(studUser, studPass);
             printf("You have registered successfully!\n\n");
             studRegCount++;
         }
-        else{
+        // Adds a node to the end of the book linked list
+        else{  
             makeStudent(studentHead, studUser, studPass);
             printf("You have registered successfully!\n\n");
             studRegCount++;
         }
     }
     
-    else if(inputL1 == 1){
+    // If statement that contains code for logging the student in
+    else if(inputL1 == 2){
         
-        if(studRegCount == 0){
+        if(studRegCount == 0){ // Checks if there are any students registered
             printf("No students are registered on the system!\n\n");
         }
+
         else{
             printf("Please enter a username: ");
             scanf("%s", studUser);
             printf("Please enter a password: ");
             scanf("%s", studPass);
-            trig = logInStudent(studentHead, studUser, studPass, nodeStudCount);
+            nodeStudCount = 0;
+            trig = logInStudent(studentHead, studUser, studPass, &nodeStudCount);
             
+            // Contains code for if the log in details are correct
             if(trig == 1){
-                
+                printf("%i", nodeStudCount);
                 printf("You have logged in successfully.\n\n");
-                
-                while(inputL2 != 4){
-                    printf("Borrow a book (need book ID) : 0\n");
-                    printf("Return a book (need book ID) : 1\n");
-                    printf("List all books : 2\n");
-                    printf("Search for a book : 3\n");
-                    printf("Back to main menu : 4\n\n");
+                    
+                while(inputL2 != 5){
+
+                    // Prints out the users menu system
+                    printf("Borrow a book (need book ID) : 1\n");
+                    printf("Return a book (need book ID) : 2\n");
+                    printf("List all books : 3\n");
+                    printf("Search for a book : 4\n");
+                    printf("Back to main menu : 5\n\n");
                     printf("What would you like to do next?\n");
                     scanf("%d", &inputL2);
                 
-                    if(inputL2 == 0){
-                        printf("Please enter the book ID\n");
-                        scanf("%d", &bookID);
-                        borrowBook(bookHead, studentHead, bookID, nodeStudCount);
-                    }
-                    else if (inputL2 == 1){
-                        printf("Please enter the book ID\n");
-                        scanf("%d", &bookID);
-                        returnBook(bookHead, studentHead, bookID, nodeStudCount);
-                    }
-                    else if(inputL2 == 2){
+                    if(inputL2 == 1){
                         if(bookAddCount == 0){
-                            printf("There are no books in the system!\n\n");
+                            printf("\nThere are currently no books on the system!\n\n");
                         }
-                        else{listBooks(bookHead);}
+                        else{
+                            printf("\nPlease enter the book ID\n");
+                            scanf("%d", &bookID);
+                            bookHead = borrowBook(bookHead, studentHead, bookID, nodeStudCount);
+                        }
+                    }
+                    else if (inputL2 == 2){
+                        if(bookAddCount == 0){
+                            printf("\nThere are currently no books on the system!\n\n");
+                        }
+                        else{
+                           printf("\nPlease enter the book ID\n");
+                            scanf("%d", &bookID);
+                            bookHead = returnBook(bookHead, studentHead, bookID, nodeStudCount); 
+                        }
                     }
                     else if(inputL2 == 3){
                         if(bookAddCount == 0){
-                            printf("There are no books in the system!\n\n");
+                            printf("\nThere are no books in the system!\n\n");
+                        }
+                        else{listBooks(bookHead);}
+                    }
+                    else if(inputL2 == 4){
+                        if(bookAddCount == 0){
+                            printf("\nThere are no books in the system!\n\n");
                         }
                         else{
-                            printf("Please enter a word that may be in the book title: ");
+                            saveDataBooks(bookHead);
+                            printf("\nPlease enter a word that may be in the book title: ");
                             scanf("%s", nameOfBook);
                             searchBook(bookHead, nameOfBook);
                         }
@@ -112,71 +139,88 @@ int main(){
             }
             else
             {
-                printf("Invalid log in details! please try again.\n\n");
+                printf("\nInvalid log in details! please try again.\n\n");
             }
             
 
         }
     }
-    else if(inputL1 == 2){
+    else if(inputL1 == 3){
         if(librarianExists == 0){
-            printf("Please enter a username to register with.\n");
+            printf("\nPlease enter a username to register with.\n");
             scanf("%s", LibUser);
             printf("Please enter a password to register with.\n");
             scanf("%s", LibPass);
-            printf("You can now log in!\n\n");
+            printf("\nYou can now log in!\n\n");
             librarianExists++;
         }
         else{
-            printf("Please enter a username to log in with.\n");
+            printf("\nPlease enter a username to log in with.\n");
             scanf("%s", LibUserTest);
             printf("Please enter a password to log in with.\n");
             scanf("%s", LibPassTest);
 
             if(strcmp(LibPassTest, LibPass) == 0 && strcmp(LibUserTest, LibUser) == 0){
-                while(inputL2 != 4){
-                printf("\nAdd a book to the library : 0\n");
-                printf("Remove a book from the library : 1\n");
-                printf("List all books : 2\n");
-                printf("List all registered users : 3\n");
-                printf("Go back to main menu : 4\n\n");
+                while(inputL2 != 5){
+                printf("\nAdd a book to the library : 1\n");
+                printf("Remove a book from the library : 2\n");
+                printf("List all books : 3\n");
+                printf("List all registered users : 4\n");
+                printf("Go back to main menu : 5\n\n");
+                
                 scanf("%d", &inputL2);
-                    
-                if(inputL2 == 0){
+                getc(stdin);
+
+                if(inputL2 == 1){
                         if(bookAddCount == 0){
                             printf("\nPlease enter a book name: ");
-                            scanf("%s", bookName);
+                            fgets(bookName, sizeof(bookName),stdin);
+                            if ((strlen(bookName) > 0) && (bookName[strlen (bookName) - 1] == '\n'))
+                                {bookName[strlen (bookName) - 1] = '\0';}
                             bookHead = createBook(bookName); 
                             bookAddCount++;
                         }
                         else{
                             printf("\nPlease enter a book name: ");
-                            scanf("%s", bookName);
-                            makeBook(bookHead, bookName); 
-                            bookAddCount++;
+                            fgets(bookName, sizeof(bookName),stdin);
+                            if ((strlen(bookName) > 0) && (bookName[strlen (bookName) - 1] == '\n'))
+                                {bookName[strlen (bookName) - 1] = '\0';}
+                            if(checkBookDup(bookHead, bookName) == 1){
+                                printf("\nBook with that name has already been created!\n");
+                            }
+                            else{
+                                makeBook(bookHead, bookName); 
+                                bookAddCount++;
+                            }
+                            
                         }
                     }
-                else if(inputL2 == 1){
+                else if(inputL2 == 2){
                     if(bookAddCount == 0){
-                        printf("There are no books in the system!\n\n");
+                        printf("\nThere are no books in the system!\n\n");
                     }
                     else{
-                        printf("Please enter the book ID value: ");
+                        printf("\nPlease enter the book ID value: ");
                         scanf("%d", &bookID);
-                        removeBook(bookHead, bookID); 
-                        bookAddCount--;
+                        if(bookID == 1){
+                            printf("\nUnfortunately you cannot delete the first book created at the moment.\n\n");
+                        }
+                        else{
+                            removeBook(bookHead, bookID); 
+                            bookAddCount--;
+                        }
                     }
                     
                 }
-                else if(inputL2 == 2){
+                else if(inputL2 == 3){
                     if(bookAddCount == 0){
-                        printf("There are no books on the system!\n");
+                        printf("\nThere are no books on the system!\n");
                     }
                     else{listBooks(bookHead);}
                 }
-                else if(inputL2 == 3){
+                else if(inputL2 == 4){
                     if(studRegCount == 0){
-                        printf("There are no registered students!\n");
+                        printf("\nThere are no registered students!\n");
                     }
                     else{listStudents(studentHead);}
                 }
@@ -188,44 +232,16 @@ int main(){
            
         }
     }
-    else if(inputL1 == 3){
+    else if(inputL1 == 4){
         i = 1;
     }
 }
-     destroyTreeStudents(studentHead);
-     destroyTreeBooks(bookHead);
-    /*
-    //char* studentName;
-    //studentNode* head = createStudent("");
-    char* bookName; 
-    bookNode* head;
-    bookName = "one123";
-    head = createBook(bookName);
-    bookName = "two";
-    makeBook(head, bookName);
-    bookName = "three";
-    makeBook(head, bookName);
-    bookName = "four";
-    makeBook(head, bookName);
-    //head = borrowBook(head, 2);
-    //head = borrowBook(head, 3);
-    //head = returnBook(head, 3);
-    //head = returnBook(head, 3);
-    char* nameOfBook;
-    nameOfBook = "one";
-    
-    saveDataBooks(head);
-    searchBook(head, nameOfBook);
-    //listBooks(head);
-    destroyTreeBooks(head);
-
-    /*
-    studentName = "ryan thompson";
-    makeStudent(head, studentName);
-    saveDataStudents(head);
-    listStudents(head);
-    destroyTreeStudents(head);
-*/
+    if(studRegCount != 0){
+        destroyTreeStudents(studentHead);
+    }
+    if(bookAddCount != 0){
+        destroyTreeBooks(bookHead);
+    }
 
     return 0;
 }
