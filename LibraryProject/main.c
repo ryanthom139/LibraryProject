@@ -27,7 +27,6 @@ int main(){
     char LibPassTest[50];
     char LibUserTest[50];
     char bookName[100];
-    int bugStop = 0;
 
     // Declarations of both the linked lists
     studentNode* studentHead;
@@ -83,7 +82,7 @@ int main(){
             
             // Contains code for if the log in details are correct
             if(trig == 1){
-                //printf("%i", nodeStudCount);
+                
                 printf("You have logged in successfully.\n\n");
                     
                 while(inputL2 != 5){
@@ -220,10 +219,13 @@ int main(){
                     else{
                         printf("\nPlease enter the book ID value: ");
                         scanf("%d", &bookID);
-                        
-                        bookHead = removeBook(bookHead, bookID); 
-                        bookAddCount--;
-                        
+                        if(bookIdExists(bookHead, bookID) == 1){
+                            bookHead = removeBook(bookHead, bookID); 
+                            bookAddCount--;
+                        }
+                        else{
+                            printf("\nBook ID does not exist!\n");
+                        }
                     }
                     
                 }
@@ -250,7 +252,7 @@ int main(){
         }
     }
 
-    // QUits the program
+    // Quits the program
     else if(inputL1 == 4){
         i = 1;
     }

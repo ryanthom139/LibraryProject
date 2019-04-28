@@ -162,7 +162,15 @@ int checkBookDup(bookNode* currPtr, char bookPar[100]){
         checkBookDup(currPtr->next, bookPar);    
     }
 
-
+int bookIdExists(bookNode* currPtr, int Id){
+    if(currPtr == NULL){
+        return 0;
+    }
+    if(currPtr->bookId == Id){
+        return 1;
+    }
+    bookIdExists(currPtr->next, Id);
+}
 
 /*
 bookNode* loadData(){

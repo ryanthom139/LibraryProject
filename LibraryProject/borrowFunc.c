@@ -45,7 +45,6 @@ bookNode* returnBook(bookNode* currPtr, studentNode* studPtrTmp, int bookIdValue
     if(currPtr == NULL){
         return NULL;
     }
-    printf("%i%i" , currPtr->borrowedBy, studentPtr->studentId);
     if(currPtr -> bookId == bookIdValue && currPtr->borrowedBy == studentPtr->studentId){
     
         currPtr->isBorrowed = 0;
