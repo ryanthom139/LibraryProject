@@ -37,29 +37,29 @@ bookNode* borrowBook(bookNode* currPtr, studentNode* studentPtr, int bookIdValue
 }
 
 // Changes back the value of the book node ID so it has been returned
-bookNode* returnBook(bookNode* currPtr, studentNode* studentPtr, int bookIdValue, int nodeCount){
+bookNode* returnBook(bookNode* currPtr, studentNode* studPtrTmp, int bookIdValue, int nodeCount){
+    studentNode* studentPtr;
     
-    if(getNodeCount == 0){
-        studentPtr = getStudentNode(studentPtr, nodeCount);
-        getNodeCount++;
+    studentPtr = getStudentNode(studPtrTmp, nodeCount);
+      
+    if(currPtr == NULL){
+        return NULL;
     }
-        if(currPtr == NULL){
-            return NULL;
-        }
-        if(currPtr -> bookId == bookIdValue && currPtr->borrowedBy == studentPtr->studentId){
+    printf("%i%i" , currPtr->borrowedBy, studentPtr->studentId);
+    if(currPtr -> bookId == bookIdValue && currPtr->borrowedBy == studentPtr->studentId){
     
-            currPtr->isBorrowed = 0;
-            currPtr->borrowedBy = 0;
-            return currPtr;
-        }
-        else if (currPtr -> bookId = bookIdValue && currPtr->borrowedBy != studentPtr->studentId){
-            printf("This isn't a book you borrowed!\n\n");
-            return currPtr;
-        }
-        currPtr->next = returnBook(currPtr->next, studentPtr, bookIdValue, nodeCount); 
-        getNodeCount = 0;
+        currPtr->isBorrowed = 0;
+        currPtr->borrowedBy = 0;
         return currPtr;
     }
+    else if (currPtr -> bookId = bookIdValue && currPtr->borrowedBy != studentPtr->studentId){
+        printf("\nThis isn't a book you borrowed!\n\n");
+        return currPtr;
+    }
+    currPtr->next = returnBook(currPtr->next, studentPtr, bookIdValue, nodeCount); 
+        
+    return currPtr;
+}
     
 // Gets the current student node of the student that has logged in
 studentNode* getStudentNode(studentNode* curPtr, int nodeCount){

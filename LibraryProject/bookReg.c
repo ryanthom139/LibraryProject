@@ -76,7 +76,7 @@ bookNode* removeBook(bookNode* currPtr, int bookIdValue){
     return currPtr;
 }
 
-// Saves the book data to a csv file so i can use my search function
+// Saves the book data to a csv file so i can use the search function
 void saveDataBooks(bookNode* head){
     if (saveDataCount == 0 && head != NULL){
         FILE *file = fopen("books.csv", "w");
@@ -152,10 +152,10 @@ int checkBookDup(bookNode* currPtr, char bookPar[100]){
         if(currPtr == NULL){
             return 0;
         }
-        if(currPtr -> bookInfo == bookPar){
+        if(strcmp(currPtr -> bookInfo, bookPar) == 0){
             return 1;
         }
-        if (currPtr->next == NULL){
+        else if (currPtr->next == NULL){
             return 0;
         }
         
